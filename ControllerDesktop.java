@@ -12,7 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import sample.database.CardTableData;
+import sample.database.FilmTableData;
 import sample.database.DatabaseHandler;
 import sample.database.ScheduleTableData;
 import sample.database.User;
@@ -23,9 +23,9 @@ import sample.database.User;
  */
 public class ControllerDesktop {
     @FXML
-    private TableView<CardTableData> cardTable;
+    private TableView<CardTableData> filmTable;
     @FXML
-    private TableColumn<CardTableData, Integer> cardId;
+    private TableColumn<CardTableData, Integer> filmId;
     @FXML
     private TableColumn<CardTableData, String> patientName;
     @FXML
@@ -33,21 +33,21 @@ public class ControllerDesktop {
     @FXML
     private TableView<ScheduleTableData> scheduleTable;
     @FXML
-    private TableColumn<ScheduleTableData, String> doctorData;
+    private TableColumn<ScheduleTableData, String> filmsData;
     @FXML
-    private TableColumn<ScheduleTableData, String> doctor;
+    private TableColumn<ScheduleTableData, String> film;
     @FXML
-    private TableColumn<ScheduleTableData, String> doctorName;
+    private TableColumn<ScheduleTableData, String> filmName;
     @FXML
-    private TextField cardIdTextField;
+    private TextField filmIdTextField;
     @FXML
     private Button openButton;
     @FXML
-    private Button deleteCardButton;
+    private Button deleteFilmButton;
     @FXML
-    private Button addCardButton;
+    private Button addFilmButton;
     @FXML
-    private Button editCardButton;
+    private Button editFilmButton;
     @FXML
     private Button exitButton;
     DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -74,17 +74,17 @@ public class ControllerDesktop {
         this.cardIdTextField.setVisible(role);
         this.openButton.setOnAction((actionEvent) -> {
             try {
-                User.setEditedCardId(Integer.parseInt(this.cardIdTextField.getText()));
+                User.setEditedFilmId(Integer.parseInt(this.cardIdTextField.getText()));
                 this.openOtherWindow("/sample/layout/open_card.fxml");
             } catch (Exception var3) {
             }
 
         });
-        this.deleteCardButton.setOnAction((actionEvent) -> {
+        this.deleteFilmButton.setOnAction((actionEvent) -> {
             this.databaseHandler.deleteCard(Integer.parseInt(this.cardIdTextField.getText()));
             this.updateCardTable();
         });
-        this.editCardButton.setOnAction((actionEvent) -> {
+        this.editFilmButton.setOnAction((actionEvent) -> {
             try {
                 User.setEditedCardId(Integer.parseInt(this.cardIdTextField.getText()));
                 this.openOtherWindow("/sample/layout/edit_card.fxml");
@@ -92,7 +92,7 @@ public class ControllerDesktop {
             }
 
         });
-        this.addCardButton.setOnAction((actionEvent) -> {
+        this.addFilmButton.setOnAction((actionEvent) -> {
             this.openOtherWindow("/sample/layout/add_card.fxml");
         });
         this.exitButton.setOnAction((actionEvent) -> {
@@ -102,9 +102,9 @@ public class ControllerDesktop {
     /**
      * метод для изменения описания фильма
      */
-    private void updateCardTable() {
+    private void updateFilmTable() {
         try {
-            this.cardTable.setItems(this.databaseHandler.returnCards("SELECT * FROM praktika.cards"));
+            this.filmTable.setItems(this.databaseHandler.returnCards("SELECT * FROM praktika.cards"));
         } catch (ClassNotFoundException | SQLException var2) {
             var2.printStackTrace();
         }
