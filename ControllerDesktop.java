@@ -23,17 +23,17 @@ import sample.database.User;
  */
 public class ControllerDesktop {
     @FXML
-    private TableView<CardTableData> filmTable;
+    private TableView<FilmTableData> cardTable;
     @FXML
-    private TableColumn<CardTableData, Integer> filmId;
+    private TableColumn<FilmTableData, Integer> cardId;
     @FXML
-    private TableColumn<CardTableData, String> patientName;
+    private TableColumn<FilmTableData, String> patientName;
     @FXML
-    private TableColumn<CardTableData, String> patientLastName;
+    private TableColumn<FilmTableData, String> patientLastName;
     @FXML
     private TableView<ScheduleTableData> scheduleTable;
     @FXML
-    private TableColumn<ScheduleTableData, String> filmsData;
+    private TableColumn<ScheduleTableData, String> filmData;
     @FXML
     private TableColumn<ScheduleTableData, String> film;
     @FXML
@@ -69,9 +69,9 @@ public class ControllerDesktop {
         this.updateScheduleTable();
         boolean role = User.getRole().equals("doctor");
         this.openButton.setVisible(role);
-        this.deleteCardButton.setVisible(role);
-        this.editCardButton.setVisible(role);
-        this.cardIdTextField.setVisible(role);
+        this.deleteFilmButton.setVisible(role);
+        this.editFilmButton.setVisible(role);
+        this.filmIdTextField.setVisible(role);
         this.openButton.setOnAction((actionEvent) -> {
             try {
                 User.setEditedFilmId(Integer.parseInt(this.cardIdTextField.getText()));
@@ -81,8 +81,8 @@ public class ControllerDesktop {
 
         });
         this.deleteFilmButton.setOnAction((actionEvent) -> {
-            this.databaseHandler.deleteCard(Integer.parseInt(this.cardIdTextField.getText()));
-            this.updateCardTable();
+            this.databaseHandler.deleteFilm(Integer.parseInt(this.cardIdTextField.getText()));
+            this.updateFilmTable();
         });
         this.editFilmButton.setOnAction((actionEvent) -> {
             try {
@@ -92,7 +92,7 @@ public class ControllerDesktop {
             }
 
         });
-        this.addFilmButton.setOnAction((actionEvent) -> {
+        this.addCardButton.setOnAction((actionEvent) -> {
             this.openOtherWindow("/sample/layout/add_card.fxml");
         });
         this.exitButton.setOnAction((actionEvent) -> {
@@ -100,18 +100,18 @@ public class ControllerDesktop {
         });
     }
     /**
-     * метод для изменения описания фильма
+     * метод для изменения фильма
      */
     private void updateFilmTable() {
         try {
-            this.filmTable.setItems(this.databaseHandler.returnCards("SELECT * FROM praktika.cards"));
+            this.cardTable.setItems(this.databaseHandler.returnCards("SELECT * FROM praktika.cards"));
         } catch (ClassNotFoundException | SQLException var2) {
             var2.printStackTrace();
         }
 
     }
     /**
-     * метод для изменения фильма
+     * метод для изменения фильмов
      */
     private void updateScheduleTable() {
         try {
